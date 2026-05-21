@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sGTM Test - Site de test GA4 Server-Side</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero {
+            background: white;
+            padding: 4rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            background: #764ba2;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 1rem;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-button {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #764ba2;
+        }
+
+        .success-message {
+            display: none;
+            background: #4caf50;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .event-log {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+        }
+
+        .event-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- GTM SNIPPET WILL BE ADDED HERE IN PHASE 3 -->
+    <!-- Place GTM head snippet here -->
+
+    <header>
+        <nav>
+            <div class="logo">🚀 sGTM Test</div>
+            <ul>
+                <li><a onclick="showPage('home')">Accueil</a></li>
+                <li><a onclick="showPage('products')">Produits</a></li>
+                <li><a onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- PAGE 1: HOME -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Bienvenue sur sGTM Test</h1>
+                <p>Site de test pour valider la migration GA4 server-side avec Google Tag Manager</p>
+                <button class="cta-button" onclick="trackEvent('hero_cta_click', 'Découvrir les produits')">Découvrir les produits</button>
+                <button class="cta-button" onclick="trackEvent('hero_secondary_click', 'Nous contacter')">Nous contacter</button>
+            </div>
+
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <h2 style="color: #667eea; margin-bottom: 1rem;">À propos de ce site</h2>
+                <p>Ce site a été créé pour tester et valider l'implémentation de Google Analytics 4 en mode server-side avec Google Tag Manager (sGTM).</p>
+                <p style="margin-top: 1rem;">Les événements suivants sont tracés :</p>
+                <ul style="margin-top: 1rem; margin-left: 2rem;">
+                    <li>📍 Navigation entre les pages</li>
+                    <li>🖱️ Clics sur les boutons</li>
+                    <li>📜 Scroll de la page</li>
+                    <li>📝 Soumission du formulaire</li>
+                    <li>🛒 Ajout au panier (simulé)</li>
+                </ul>
+            </div>
+
+            <div class="event-log">
+                <strong>Événements tracés :</strong>
+                <div id="event-log-container"></div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: PRODUCTS -->
+        <div id="products" class="page">
+            <div class="hero">
+                <h1>Nos produits</h1>
+                <p>Sélectionnez un produit pour le tester</p>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Produit A</h3>
+                    <p>Produit premium avec features avancées</p>
+                    <div class="price">99€</div>
+                    <button class="cta-button" onclick="trackEvent('product_click', 'Produit A', {price: 99, category: 'premium'})">Voir détails</button>
+                    <button class="cta-button" onclick="trackEvent('add_to_cart', 'Produit A', {price: 99})">Ajouter au panier</button>
+                </div>
+
+                <div class="product-card">
+                    <h3>Produit B</h3>
+                    <p>Produit standard avec bon rapport qualité/prix</p>
+                    <div class="price">49€</div>
+                    <button class="cta-button" onclick="trackEvent('product_click', 'Produit B', {price: 49, category: 'standard'})">Voir détails</button>
+                    <button class="cta-button" onclick="trackEvent('add_to_cart', 'Produit B', {price: 49})">Ajouter au panier</button>
+                </div>
+
+                <div class="product-card">
+                    <h3>Produit C</h3>
+                    <p>Produit entry-level pour débuter</p>
+                    <div class="price">29€</div>
+                    <button class="cta-button" onclick="trackEvent('product_click', 'Produit C', {price: 29, category: 'entry'})">Voir détails</button>
+                    <button class="cta-button" onclick="trackEvent('add_to_cart', 'Produit C', {price: 29})">Ajouter au panier</button>
+                </div>
+            </div>
+
+            <div class="event-log">
+                <strong>Événements tracés :</strong>
+                <div id="event-log-container"></div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: CONTACT -->
+        <div id="contact" class="page">
+            <div class="hero">
+                <h1>Contactez-nous</h1>
+                <p>Envoyez-nous un message et nous vous répondrons rapidement</p>
+            </div>
+
+            <div class="form-container">
+                <div class="success-message" id="success-message">
+                    ✅ Message envoyé avec succès ! Merci de votre intérêt.
+                </div>
+
+                <form id="contact-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">-- Sélectionnez un sujet --</option>
+                            <option value="info_produit">Information produit</option>
+                            <option value="devis">Demande de devis</option>
+                            <option value="support">Support technique</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">Envoyer le message</button>
+                </form>
+            </div>
+
+            <div class="event-log">
+                <strong>Événements tracés :</strong>
+                <div id="event-log-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 sGTM Test - Site de validation GA4 Server-Side</p>
+    </footer>
+
+    <div class="scroll-indicator" id="scroll-indicator">0%</div>
+
+    <!-- GTM SNIPPET WILL BE ADDED HERE IN PHASE 3 -->
+    <!-- Place GTM body snippet here (just before closing body tag) -->
+
+    <script>
+        // PAGE NAVIGATION
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Track page view
+            trackEvent('page_view', pageId);
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // EVENT TRACKING FUNCTION
+        function trackEvent(eventName, eventLabel, eventData = {}) {
+            // Log to console for debugging
+            console.log('📊 Event tracked:', {
+                event: eventName,
+                label: eventLabel,
+                data: eventData,
+                timestamp: new Date().toISOString()
+            });
+
+            // Add to event log on page
+            addToEventLog(`${eventName} - ${eventLabel}`);
+
+            // Push to dataLayer (for GTM - will be used in Phase 3)
+            if (typeof window.dataLayer !== 'undefined') {
+                window.dataLayer.push({
+                    event: eventName,
+                    event_label: eventLabel,
+                    ...eventData
+                });
+            } else {
+                // Initialize dataLayer if it doesn't exist
+                window.dataLayer = [{
+                    event: eventName,
+                    event_label: eventLabel,
+                    ...eventData
+                }];
+            }
+        }
+
+        // FORM SUBMISSION
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            // Track form submission
+            trackEvent('form_submission', 'contact_form', {
+                form_name: 'contact',
+                subject: subject,
+                email_domain: email.split('@')[1]
+            });
+
+            // Show success message
+            const successMsg = document.getElementById('success-message');
+            successMsg.classList.add('show');
+
+            // Reset form
+            document.getElementById('contact-form').reset();
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 5000);
+        }
+
+        // SCROLL TRACKING
+        let scrolled = false;
+        let scrollThreshold = 0;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+            // Update scroll indicator
+            document.getElementById('scroll-indicator').textContent = scrollPercent + '%';
+
+            // Track at 25%, 50%, 75%, 100%
+            if (scrollPercent >= 25 && scrollThreshold < 25) {
+                trackEvent('scroll_depth', '25%');
+                scrollThreshold = 25;
+            }
+            if (scrollPercent >= 50 && scrollThreshold < 50) {
+                trackEvent('scroll_depth', '50%');
+                scrollThreshold = 50;
+            }
+            if (scrollPercent >= 75 && scrollThreshold < 75) {
+                trackEvent('scroll_depth', '75%');
+                scrollThreshold = 75;
+            }
+            if (scrollPercent >= 95 && scrollThreshold < 95) {
+                trackEvent('scroll_depth', '100%');
+                scrollThreshold = 95;
+            }
+        });
+
+        // EVENT LOG DISPLAY
+        const events = [];
+
+        function addToEventLog(eventText) {
+            events.unshift(`[${new Date().toLocaleTimeString()}] ${eventText}`);
+
+            // Keep only last 10 events
+            if (events.length > 10) {
+                events.pop();
+            }
+
+            // Update display
+            const logContainer = document.getElementById('event-log-container');
+            logContainer.innerHTML = events
+                .map(e => `<div class="event-item">${e}</div>`)
+                .join('');
+        }
+
+        // INITIAL PAGE VIEW
+        document.addEventListener('DOMContentLoaded', () => {
+            trackEvent('page_view', 'home');
+        });
+
+        // UNLOAD TRACKING (optional - for session end)
+        window.addEventListener('beforeunload', () => {
+            trackEvent('page_unload', document.title);
+        });
+    </script>
+</body>
+</html>
