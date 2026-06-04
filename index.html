@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-     <!-- Google Tag Manager -->
+    <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -289,10 +289,13 @@
     </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PX5JTHGN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- GTM HEAD SNIPPET -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PX5JTHGN');</script>
 
     <header>
         <nav>
@@ -596,34 +599,49 @@
             addToEventLog(eventName + ' - ' + buttonText);
         }
 
-        // ─── PRODUCT CLICK ──────────────────────────────────────────────
+        // ─── SELECT ITEM (product click — standard GA4) ─────────────────
         function trackProductClick(productName, price, category) {
             pushToDataLayer({
-                event: 'product_click',
+                event: 'select_item',
                 site_name: SITE_NAME,
                 page_name: 'main',
                 page_section: 'Products',
-                product_name: productName,
-                product_price: price,
-                product_category: category,
                 currency: 'EUR',
+                item_name: productName,
+                item_category: category,
+                price: price,
+                items: [{
+                    item_name: productName,
+                    item_category: category,
+                    price: price,
+                    currency: 'EUR',
+                    quantity: 1
+                }],
                 user_id: getUserId()
             });
-            addToEventLog('product_click - ' + productName);
+            addToEventLog('select_item - ' + productName);
         }
 
-        // ─── ADD TO CART ────────────────────────────────────────────────
+        // ─── ADD TO CART (standard GA4 ecommerce) ───────────────────────
         function trackAddToCart(productName, price, category) {
             pushToDataLayer({
                 event: 'add_to_cart',
                 site_name: SITE_NAME,
                 page_name: 'main',
                 page_section: 'Products',
-                product_name: productName,
-                product_price: price,
-                product_category: category,
                 currency: 'EUR',
+                value: price,
+                item_name: productName,
+                item_category: category,
+                price: price,
                 quantity: 1,
+                items: [{
+                    item_name: productName,
+                    item_category: category,
+                    price: price,
+                    currency: 'EUR',
+                    quantity: 1
+                }],
                 user_id: getUserId()
             });
             addToEventLog('add_to_cart - ' + productName + ' (' + price + '€)');
