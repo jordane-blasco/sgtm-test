@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Google Tag Manager -->
+     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -12,11 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sGTM Test - Site de test GA4 Server-Side</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -44,16 +40,9 @@
             padding: 0 2rem;
         }
 
-        nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+        nav .logo { font-size: 1.5rem; font-weight: bold; }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-        }
+        nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
 
         nav a {
             color: white;
@@ -64,29 +53,43 @@
             border-radius: 4px;
         }
 
-        nav a:hover {
+        nav a:hover { background: rgba(255,255,255,0.2); }
+
+        /* LOGIN BUTTON */
+        .login-btn {
             background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
+        .login-btn:hover { background: rgba(255,255,255,0.35); }
+        .login-btn.logged-in { background: rgba(76,175,80,0.4); border-color: rgba(76,175,80,0.8); }
 
-        .page {
+        .user-badge {
             display: none;
-            animation: fadeIn 0.3s;
+            background: rgba(255,255,255,0.15);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.9);
         }
 
-        .page.active {
-            display: block;
-        }
+        .user-badge.visible { display: inline-block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        main { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+
+        .page { display: none; animation: fadeIn 0.3s; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .hero {
             background: white;
@@ -97,17 +100,8 @@
             text-align: center;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 2rem;
-        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #667eea; }
+        .hero p { font-size: 1.1rem; color: #666; margin-bottom: 2rem; }
 
         .cta-button {
             background: #667eea;
@@ -121,9 +115,7 @@
             margin: 0.5rem;
         }
 
-        .cta-button:hover {
-            background: #764ba2;
-        }
+        .cta-button:hover { background: #764ba2; }
 
         .products-grid {
             display: grid;
@@ -140,27 +132,11 @@
             transition: transform 0.3s;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-card h3 { color: #667eea; margin-bottom: 0.5rem; }
+        .product-card p { color: #666; margin-bottom: 1rem; font-size: 0.9rem; }
 
-        .product-card h3 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-card p {
-            color: #666;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #764ba2;
-            margin-bottom: 1rem;
-        }
+        .price { font-size: 1.5rem; font-weight: bold; color: #764ba2; margin-bottom: 1rem; }
 
         .form-container {
             background: white;
@@ -171,21 +147,10 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .form-container h2 {
-            color: #667eea;
-            margin-bottom: 1.5rem;
-        }
+        .form-container h2 { color: #667eea; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #333;
-        }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333; }
 
         input, textarea, select {
             width: 100%;
@@ -202,10 +167,7 @@
             box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
+        textarea { resize: vertical; min-height: 120px; }
 
         .submit-button {
             background: #667eea;
@@ -219,9 +181,7 @@
             transition: background 0.3s;
         }
 
-        .submit-button:hover {
-            background: #764ba2;
-        }
+        .submit-button:hover { background: #764ba2; }
 
         .success-message {
             display: none;
@@ -233,9 +193,7 @@
             text-align: center;
         }
 
-        .success-message.show {
-            display: block;
-        }
+        .success-message.show { display: block; }
 
         footer {
             background: #333;
@@ -273,22 +231,69 @@
             font-size: 0.85rem;
         }
 
-        .event-item {
-            padding: 0.5rem;
-            border-bottom: 1px solid #eee;
-            color: #666;
+        .event-item { padding: 0.5rem; border-bottom: 1px solid #eee; color: #666; }
+        .event-item:last-child { border-bottom: none; }
+
+        /* LOGIN MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
         }
 
-        .event-item:last-child {
-            border-bottom: none;
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 360px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
+
+        .modal h2 { color: #667eea; margin-bottom: 1.5rem; }
+
+        .modal input {
+            margin-bottom: 1rem;
+        }
+
+        .modal-buttons { display: flex; gap: 1rem; margin-top: 1rem; }
+
+        .btn-cancel {
+            background: #eee;
+            color: #333;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .btn-login {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .btn-login:hover { background: #764ba2; }
     </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
+<!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PX5JTHGN"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
     <header>
         <nav>
             <div class="logo">🚀 sGTM Test</div>
@@ -296,9 +301,24 @@
                 <li><a onclick="showPage('home')">Accueil</a></li>
                 <li><a onclick="showPage('products')">Produits</a></li>
                 <li><a onclick="showPage('contact')">Contact</a></li>
+                <li><span class="user-badge" id="user-badge"></span></li>
+                <li><button class="login-btn" id="login-btn" onclick="handleLoginClick()">🔓 Se connecter</button></li>
             </ul>
         </nav>
     </header>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal">
+            <h2>🔐 Connexion simulée</h2>
+            <p style="color:#666; margin-bottom:1rem; font-size:0.9rem;">Entrez un identifiant pour simuler une session utilisateur.</p>
+            <input type="text" id="login-user-input" placeholder="Ex: user123 ou jean.dupont" />
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeLoginModal()">Annuler</button>
+                <button class="btn-login" onclick="doLogin()">Se connecter</button>
+            </div>
+        </div>
+    </div>
 
     <main>
         <!-- PAGE 1: HOME -->
@@ -306,8 +326,8 @@
             <div class="hero">
                 <h1>Bienvenue sur sGTM Test</h1>
                 <p>Site de test pour valider la migration GA4 server-side avec Google Tag Manager</p>
-                <button class="cta-button" onclick="trackEvent('hero_cta_click', 'Découvrir les produits')">Découvrir les produits</button>
-                <button class="cta-button" onclick="trackEvent('hero_secondary_click', 'Nous contacter')">Nous contacter</button>
+                <button class="cta-button" onclick="trackHeroCta('Découvrir les produits', 'hero_cta_click')">Découvrir les produits</button>
+                <button class="cta-button" onclick="trackHeroCta('Nous contacter', 'hero_secondary_click')">Nous contacter</button>
             </div>
 
             <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
@@ -315,11 +335,13 @@
                 <p>Ce site a été créé pour tester et valider l'implémentation de Google Analytics 4 en mode server-side avec Google Tag Manager (sGTM).</p>
                 <p style="margin-top: 1rem;">Les événements suivants sont tracés :</p>
                 <ul style="margin-top: 1rem; margin-left: 2rem;">
-                    <li>📍 Navigation entre les pages</li>
-                    <li>🖱️ Clics sur les boutons</li>
-                    <li>📜 Scroll de la page</li>
-                    <li>📝 Soumission du formulaire</li>
-                    <li>🛒 Ajout au panier (simulé)</li>
+                    <li>📍 Navigation entre les pages (page_view)</li>
+                    <li>🖱️ Clics sur les boutons CTA (hero_cta_click, hero_secondary_click)</li>
+                    <li>📜 Scroll de la page (scroll_depth)</li>
+                    <li>📝 Soumission du formulaire (form_submission)</li>
+                    <li>🛒 Ajout au panier (add_to_cart)</li>
+                    <li>🔍 Clic produit (product_click)</li>
+                    <li>🔐 Connexion utilisateur (login)</li>
                 </ul>
             </div>
 
@@ -341,24 +363,24 @@
                     <h3>Produit A</h3>
                     <p>Produit premium avec features avancées</p>
                     <div class="price">99€</div>
-                    <button class="cta-button" onclick="trackEvent('product_click', 'Produit A', {price: 99, category: 'premium'})">Voir détails</button>
-                    <button class="cta-button" onclick="trackEvent('add_to_cart', 'Produit A', {price: 99})">Ajouter au panier</button>
+                    <button class="cta-button" onclick="trackProductClick('Produit A', 99, 'premium')">Voir détails</button>
+                    <button class="cta-button" onclick="trackAddToCart('Produit A', 99, 'premium')">Ajouter au panier</button>
                 </div>
 
                 <div class="product-card">
                     <h3>Produit B</h3>
                     <p>Produit standard avec bon rapport qualité/prix</p>
                     <div class="price">49€</div>
-                    <button class="cta-button" onclick="trackEvent('product_click', 'Produit B', {price: 49, category: 'standard'})">Voir détails</button>
-                    <button class="cta-button" onclick="trackEvent('add_to_cart', 'Produit B', {price: 49})">Ajouter au panier</button>
+                    <button class="cta-button" onclick="trackProductClick('Produit B', 49, 'standard')">Voir détails</button>
+                    <button class="cta-button" onclick="trackAddToCart('Produit B', 49, 'standard')">Ajouter au panier</button>
                 </div>
 
                 <div class="product-card">
                     <h3>Produit C</h3>
                     <p>Produit entry-level pour débuter</p>
                     <div class="price">29€</div>
-                    <button class="cta-button" onclick="trackEvent('product_click', 'Produit C', {price: 29, category: 'entry'})">Voir détails</button>
-                    <button class="cta-button" onclick="trackEvent('add_to_cart', 'Produit C', {price: 29})">Ajouter au panier</button>
+                    <button class="cta-button" onclick="trackProductClick('Produit C', 29, 'entry')">Voir détails</button>
+                    <button class="cta-button" onclick="trackAddToCart('Produit C', 29, 'entry')">Ajouter au panier</button>
                 </div>
             </div>
 
@@ -385,12 +407,10 @@
                         <label for="name">Nom complet</label>
                         <input type="text" id="name" name="name" required>
                     </div>
-
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-
                     <div class="form-group">
                         <label for="subject">Sujet</label>
                         <select id="subject" name="subject" required>
@@ -401,12 +421,10 @@
                             <option value="autre">Autre</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="message">Message</label>
                         <textarea id="message" name="message" required></textarea>
                     </div>
-
                     <button type="submit" class="submit-button">Envoyer le message</button>
                 </form>
             </div>
@@ -419,148 +437,272 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 sGTM Test - Site de validation GA4 Server-Side</p>
+        <p>&copy; 2026 sGTM Test - Site de validation GA4 Server-Side</p>
     </footer>
 
     <div class="scroll-indicator" id="scroll-indicator">0%</div>
 
-    <!-- GTM SNIPPET WILL BE ADDED HERE IN PHASE 3 -->
-    <!-- Place GTM body snippet here (just before closing body tag) -->
+    <!-- GTM BODY SNIPPET -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PX5JTHGN"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <script>
-        // PAGE NAVIGATION
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+        // ─── SITE CONFIG ───────────────────────────────────────────────
+        const SITE_NAME = 'sGTM Test';
 
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
+        const PAGE_CONFIG = {
+            home:     { page_section: 'Homepage', page_name: 'main' },
+            products: { page_section: 'Products', page_name: 'main' },
+            contact:  { page_section: 'Contact',  page_name: 'main' }
+        };
 
-            // Track page view
-            trackEvent('page_view', pageId);
+        let currentPage = 'home';
 
-            // Scroll to top
-            window.scrollTo(0, 0);
+        // ─── USER SESSION (persistent via localStorage) ─────────────────
+        function getUserId() {
+            return localStorage.getItem('sgtm_user_id') || '';
         }
 
-        // EVENT TRACKING FUNCTION
-        function trackEvent(eventName, eventLabel, eventData = {}) {
-            // Log to console for debugging
-            console.log('📊 Event tracked:', {
-                event: eventName,
-                label: eventLabel,
-                data: eventData,
-                timestamp: new Date().toISOString()
-            });
+        function setUserId(id) {
+            localStorage.setItem('sgtm_user_id', id);
+        }
 
-            // Add to event log on page
-            addToEventLog(`${eventName} - ${eventLabel}`);
+        function clearUserId() {
+            localStorage.removeItem('sgtm_user_id');
+        }
 
-            // Push to dataLayer (for GTM - will be used in Phase 3)
-            if (typeof window.dataLayer !== 'undefined') {
-                window.dataLayer.push({
-                    event: eventName,
-                    event_label: eventLabel,
-                    ...eventData
-                });
+        function isLoggedIn() {
+            return getUserId() !== '';
+        }
+
+        // ─── UI LOGIN STATE ─────────────────────────────────────────────
+        function updateLoginUI() {
+            const btn    = document.getElementById('login-btn');
+            const badge  = document.getElementById('user-badge');
+            const userId = getUserId();
+
+            if (userId) {
+                btn.textContent = '🔒 Se déconnecter';
+                btn.classList.add('logged-in');
+                badge.textContent = '👤 ' + userId;
+                badge.classList.add('visible');
             } else {
-                // Initialize dataLayer if it doesn't exist
-                window.dataLayer = [{
-                    event: eventName,
-                    event_label: eventLabel,
-                    ...eventData
-                }];
+                btn.textContent = '🔓 Se connecter';
+                btn.classList.remove('logged-in');
+                badge.textContent = '';
+                badge.classList.remove('visible');
             }
         }
 
-        // FORM SUBMISSION
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-
-            // Track form submission
-            trackEvent('form_submission', 'contact_form', {
-                form_name: 'contact',
-                subject: subject,
-                email_domain: email.split('@')[1]
-            });
-
-            // Show success message
-            const successMsg = document.getElementById('success-message');
-            successMsg.classList.add('show');
-
-            // Reset form
-            document.getElementById('contact-form').reset();
-
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                successMsg.classList.remove('show');
-            }, 5000);
+        function handleLoginClick() {
+            if (isLoggedIn()) {
+                doLogout();
+            } else {
+                document.getElementById('login-modal').classList.add('active');
+                document.getElementById('login-user-input').focus();
+            }
         }
 
-        // SCROLL TRACKING
-        let scrolled = false;
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.remove('active');
+            document.getElementById('login-user-input').value = '';
+        }
+
+        function doLogin() {
+            const input = document.getElementById('login-user-input').value.trim();
+            if (!input) return;
+
+            const userId = 'USR-' + input.toUpperCase().replace(/\s+/g, '-');
+            setUserId(userId);
+            closeLoginModal();
+            updateLoginUI();
+
+            pushToDataLayer({
+                event: 'login',
+                site_name: SITE_NAME,
+                page_section: PAGE_CONFIG[currentPage].page_section,
+                page_name: PAGE_CONFIG[currentPage].page_name,
+                user_id: userId,
+                login_method: 'manual'
+            });
+
+            addToEventLog('login - ' + userId);
+        }
+
+        function doLogout() {
+            const previousId = getUserId();
+            clearUserId();
+            updateLoginUI();
+
+            pushToDataLayer({
+                event: 'logout',
+                site_name: SITE_NAME,
+                page_section: PAGE_CONFIG[currentPage].page_section,
+                page_name: PAGE_CONFIG[currentPage].page_name,
+                user_id: ''
+            });
+
+            addToEventLog('logout - ' + previousId);
+        }
+
+        // Enter key in login modal
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('login-user-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') doLogin();
+            });
+        });
+
+        // ─── CORE DATALAYER PUSH ────────────────────────────────────────
+        function pushToDataLayer(payload) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(payload);
+            console.log('📊 dataLayer.push:', payload);
+        }
+
+        // ─── PAGE NAVIGATION ────────────────────────────────────────────
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+            scrollThreshold = 0;
+            window.scrollTo(0, 0);
+            trackPageView(pageId);
+        }
+
+        function trackPageView(pageId) {
+            const cfg = PAGE_CONFIG[pageId] || { page_section: pageId, page_name: 'main' };
+            pushToDataLayer({
+                event: 'page_view',
+                site_name: SITE_NAME,
+                page_name: cfg.page_name,
+                page_section: cfg.page_section,
+                user_id: getUserId()
+            });
+            addToEventLog('page_view - ' + cfg.page_section);
+        }
+
+        // ─── HERO CTA CLICKS ────────────────────────────────────────────
+        function trackHeroCta(buttonText, eventName) {
+            const cfg = PAGE_CONFIG[currentPage];
+            pushToDataLayer({
+                event: eventName,
+                site_name: SITE_NAME,
+                page_name: cfg.page_name,
+                page_section: cfg.page_section,
+                button_text: buttonText,
+                button_location: 'hero',
+                user_id: getUserId()
+            });
+            addToEventLog(eventName + ' - ' + buttonText);
+        }
+
+        // ─── PRODUCT CLICK ──────────────────────────────────────────────
+        function trackProductClick(productName, price, category) {
+            pushToDataLayer({
+                event: 'product_click',
+                site_name: SITE_NAME,
+                page_name: 'main',
+                page_section: 'Products',
+                product_name: productName,
+                product_price: price,
+                product_category: category,
+                currency: 'EUR',
+                user_id: getUserId()
+            });
+            addToEventLog('product_click - ' + productName);
+        }
+
+        // ─── ADD TO CART ────────────────────────────────────────────────
+        function trackAddToCart(productName, price, category) {
+            pushToDataLayer({
+                event: 'add_to_cart',
+                site_name: SITE_NAME,
+                page_name: 'main',
+                page_section: 'Products',
+                product_name: productName,
+                product_price: price,
+                product_category: category,
+                currency: 'EUR',
+                quantity: 1,
+                user_id: getUserId()
+            });
+            addToEventLog('add_to_cart - ' + productName + ' (' + price + '€)');
+        }
+
+        // ─── FORM SUBMISSION ────────────────────────────────────────────
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const email   = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+
+            pushToDataLayer({
+                event: 'form_submission',
+                site_name: SITE_NAME,
+                page_name: 'main',
+                page_section: 'Contact',
+                form_name: 'contact',
+                form_subject: subject,
+                email_domain: email.split('@')[1] || '',
+                user_id: getUserId()
+            });
+
+            addToEventLog('form_submission - ' + subject);
+
+            const successMsg = document.getElementById('success-message');
+            successMsg.classList.add('show');
+            document.getElementById('contact-form').reset();
+            setTimeout(() => successMsg.classList.remove('show'), 5000);
+        }
+
+        // ─── SCROLL TRACKING ────────────────────────────────────────────
         let scrollThreshold = 0;
 
         window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+            const scrollTop    = window.scrollY;
+            const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
 
-            // Update scroll indicator
             document.getElementById('scroll-indicator').textContent = scrollPercent + '%';
 
-            // Track at 25%, 50%, 75%, 100%
-            if (scrollPercent >= 25 && scrollThreshold < 25) {
-                trackEvent('scroll_depth', '25%');
-                scrollThreshold = 25;
-            }
-            if (scrollPercent >= 50 && scrollThreshold < 50) {
-                trackEvent('scroll_depth', '50%');
-                scrollThreshold = 50;
-            }
-            if (scrollPercent >= 75 && scrollThreshold < 75) {
-                trackEvent('scroll_depth', '75%');
-                scrollThreshold = 75;
-            }
-            if (scrollPercent >= 95 && scrollThreshold < 95) {
-                trackEvent('scroll_depth', '100%');
-                scrollThreshold = 95;
-            }
+            const cfg = PAGE_CONFIG[currentPage];
+
+            [25, 50, 75, 100].forEach(threshold => {
+                const reached = threshold === 100 ? scrollPercent >= 95 : scrollPercent >= threshold;
+                if (reached && scrollThreshold < threshold) {
+                    scrollThreshold = threshold;
+                    pushToDataLayer({
+                        event: 'scroll_depth',
+                        site_name: SITE_NAME,
+                        page_name: cfg.page_name,
+                        page_section: cfg.page_section,
+                        scroll_threshold: threshold + '%',
+                        user_id: getUserId()
+                    });
+                    addToEventLog('scroll_depth - ' + threshold + '%');
+                }
+            });
         });
 
-        // EVENT LOG DISPLAY
+        // ─── EVENT LOG DISPLAY ──────────────────────────────────────────
         const events = [];
 
-        function addToEventLog(eventText) {
-            events.unshift(`[${new Date().toLocaleTimeString()}] ${eventText}`);
-
-            // Keep only last 10 events
-            if (events.length > 10) {
-                events.pop();
-            }
-
-            // Update display
-            const logContainer = document.getElementById('event-log-container');
-            logContainer.innerHTML = events
-                .map(e => `<div class="event-item">${e}</div>`)
-                .join('');
+        function addToEventLog(text) {
+            events.unshift('[' + new Date().toLocaleTimeString() + '] ' + text);
+            if (events.length > 10) events.pop();
+            document.querySelectorAll('#event-log-container').forEach(el => {
+                el.innerHTML = events.map(e => '<div class="event-item">' + e + '</div>').join('');
+            });
         }
 
-        // INITIAL PAGE VIEW
+        // ─── INIT ───────────────────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
-            trackEvent('page_view', 'home');
+            updateLoginUI();
+            trackPageView('home');
         });
 
-        // UNLOAD TRACKING (optional - for session end)
         window.addEventListener('beforeunload', () => {
-            trackEvent('page_unload', document.title);
+            pushToDataLayer({ event: 'page_unload', site_name: SITE_NAME, user_id: getUserId() });
         });
     </script>
 </body>
